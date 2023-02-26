@@ -5,6 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Resources
 
 [Favicon](https://icons8.com/icons/set/favicon)
+[React Bootstrap](https://react-bootstrap.github.io/)
+[Bootswatch](https://bootswatch.com/)
 
 ## Available Scripts
 
