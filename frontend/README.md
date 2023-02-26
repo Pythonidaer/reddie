@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Resources
+
+[Favicon](https://icons8.com/icons/set/favicon)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -68,8 +72,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## Versioning
-
-"react-bootstrap": "^2.5.0" was uninstalled in an attempt to fix Form.File
-See [here](https://www.udemy.com/course/mern-ecommerce/learn/lecture/22498990#questions/16297512) for more details.
