@@ -7,6 +7,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 [Favicon](https://icons8.com/icons/set/favicon)
 [React Bootstrap](https://react-bootstrap.github.io/)
 [Bootswatch](https://bootswatch.com/)
+[Font Awesome](https://fontawesome.com/)
+[Reactionary 1.0](https://pythonidaer.github.io/reactionary/)
+[Reactionary 1.0 Code](https://github.com/Pythonidaer/reactionary)
+[Sample JSON](https://www.reddit.com/r/learnjavascript.json?limit=4)
 
 ## Available Scripts
 
