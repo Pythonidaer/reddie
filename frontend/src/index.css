@@ -2,10 +2,14 @@ main {
   min-height: 80vh;
 }
 
+.card-text {
+  font-size: 0.8rem !important;
+}
+
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
-    justify-content: end;
+    justify-content: flex-end;
   }
 }

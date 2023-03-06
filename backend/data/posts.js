@@ -92,6 +92,7 @@ const posts = [
   },
 ]
 
+// module.export = posts
 export default posts
 
 // const posts = [
