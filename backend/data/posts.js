@@ -13,7 +13,7 @@ const posts = [
         'https://b.thumbs.redditmedia.com/IYXkx7ey_FqO8Cwu20dtkSI_VOM9Ejm1hCoXz8HuSho.jpg',
       created: 1677384322.0,
       subreddit_id: 't5_2tugi',
-      _id: '11c4v65',
+      id: '11c4v65',
       author: 'alexmacarthur',
       num_comments: 6,
       permalink:
@@ -35,7 +35,7 @@ const posts = [
       thumbnail: 'default',
       created: 1677450074.0,
       subreddit_id: 't5_2tugi',
-      _id: '11cumfb',
+      id: '11cumfb',
       author: 'javascript-today',
       num_comments: 0,
       permalink:
@@ -58,7 +58,7 @@ const posts = [
       thumbnail: 'self',
       created: 1677421833.0,
       subreddit_id: 't5_2tugi',
-      _id: '11cikpx',
+      id: '11cikpx',
       author: 'PinkCloud_YellowHaze',
       num_comments: 6,
       permalink: '/r/learnjavascript/comments/11cikpx/help_with_api/',
@@ -81,7 +81,7 @@ const posts = [
       thumbnail: 'self',
       created: 1677432643.0,
       subreddit_id: 't5_2tugi',
-      _id: '11cn5hv',
+      id: '11cn5hv',
       author: 'BrilliantTrouble724',
       num_comments: 4,
       permalink:
@@ -91,7 +91,7 @@ const posts = [
     },
   },
 ]
-
+// changed _id back to id so that might break things before I seed and fetch data directly from MongoDB
 // module.export = posts
 export default posts
 
