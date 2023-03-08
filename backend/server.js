@@ -24,7 +24,8 @@ app.get('/api/posts', (req, res) => {
 })
 
 app.get('/api/posts/:id', (req, res) => {
-  const post = allPosts.find((p) => p._id === req.params.id)
+  const post = allPosts.find((p) => p.id === req.params.id)
+  // const post = allPosts.find((p) => p._id === req.params.id)
   res.send(post)
 })
 

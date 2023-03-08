@@ -12,7 +12,8 @@ const Post = ({ post }) => {
           {post.selftext} <br /> <br />
           Comments: {post.num_comments}
         </Card.Text>
-        <Link className='card-link' to={`/post/${post._id}`}>
+        <Link className='card-link' to={`/post/${post.id}`}>
+          {/* <Link className='card-link' to={`/post/${post._id}`}> */}
           See Post
         </Link>
         <Link className='card-link' to={post.url} target='_blank'>
