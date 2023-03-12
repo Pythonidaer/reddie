@@ -12,7 +12,9 @@ const Post = ({ post }) => {
           {post.selftext} <br /> <br />
           Comments: {post.num_comments}
         </Card.Text>
+        {/* No _id for direct Reddit requests */}
         <Link className='card-link' to={`/post/${post.id}`}>
+          {/* _id for MongoDB data requests */}
           {/* <Link className='card-link' to={`/post/${post._id}`}> */}
           See Post
         </Link>

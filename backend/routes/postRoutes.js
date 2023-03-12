@@ -33,7 +33,8 @@ router.get(
     if (post) {
       res.json(post)
     } else {
-      res.status(404).json({ message: 'Post not found' })
+      res.status(404)
+      throw new Error('Product not found')
     }
     res.send(post)
   })
