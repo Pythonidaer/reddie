@@ -23,6 +23,21 @@ router.get(
   })
 )
 
+router.get(
+  '/undefined',
+  asyncHandler(async (req, res) => {
+    const post = await Post.findById(req.params.id)
+    if (post) {
+      res.json(post)
+      console.log('Success')
+    } else {
+      console.log(req.params)
+      res.status(404)
+      throw new Error('Post not found')
+    }
+    res.send(post)
+  })
+)
 // @desc Fetch all post
 // @route GET /api/posts/"id"
 // @access Public
@@ -32,11 +47,15 @@ router.get(
     const post = await Post.findById(req.params.id)
     if (post) {
       res.json(post)
+      console.log('Success')
     } else {
+      console.log(req)
+
       res.status(404)
-      throw new Error('Product not found')
+      throw new Error('Post not found')
     }
     res.send(post)
   })
 )
+
 export default router

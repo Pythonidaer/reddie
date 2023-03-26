@@ -11,7 +11,6 @@ const PostScreen = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const { data } = await axios.get(`/api/posts/${params.id}`)
-
       setPost(data)
     }
 

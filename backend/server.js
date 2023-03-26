@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-// import posts from './data/posts.js'
 import postRoutes from './routes/postRoutes.js'
 
 dotenv.config()
@@ -16,12 +15,6 @@ connectDB()
 // })
 
 const app = express()
-
-// Middleware example
-// app.use((req, res, next) => {
-//   console.log(req)
-//   next()
-// })
 
 app.get('/', (req, res) => {
   res.send('API is running...')

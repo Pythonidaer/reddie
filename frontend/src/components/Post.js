@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
+
 // will need conversion from reddit markdown syntax to html
 const Post = ({ post }) => {
   return (
@@ -12,31 +13,15 @@ const Post = ({ post }) => {
           {post.selftext} <br /> <br />
           Comments: {post.num_comments}
         </Card.Text>
-        {/* No _id for direct Reddit requests */}
-        <Link className='card-link' to={`/post/${post.id}`}>
-          {/* _id for MongoDB data requests */}
-          {/* <Link className='card-link' to={`/post/${post._id}`}> */}
+        <Link className='card-link' to={`/post/${post._id}`}>
           See Post
         </Link>
         <Link className='card-link' to={post.url} target='_blank'>
           {post.subreddit}
         </Link>
-
-        {/* <Card.Link href={`/post/${post._id}`}>See Post</Card.Link>
-        <Card.Link href={post.url} target='_blank'>
-          {post.subreddit}
-        </Card.Link>  */}
       </Card.Body>
     </Card>
   )
 }
 
 export default Post
-
-{
-  /* 
-<Card className='my-3 p-3 rounded'>
-  <a href={`/product/${product._id}`}></a>
-</Card>
-*/
-}
