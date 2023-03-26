@@ -9,19 +9,15 @@ import DataContext from '../components/DataContext'
 const DynamicPostScreen = () => {
   // const { data, handleChangeData } = useContext(DataContext)
   const { data } = useContext(DataContext)
-
   const [lastPath, setLastPath] = useState('')
   const [post, setPost] = useState({})
   const url = window.location.href
 
   const checkURL = (url) => {
     const parts = url.split('/')
-    // console.log(parts)
     const dynamicPostScreen = parts.find((element) => element === 'dynamicPost')
     const lastPart = parts.pop()
-
     const myObject = data.find((obj) => obj.id === lastPart)
-    console.log(dynamicPostScreen)
     setLastPath(lastPart)
     setPost(myObject)
   }

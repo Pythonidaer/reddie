@@ -11,10 +11,6 @@ const HomeScreen = () => {
   const [searchResults, setSearchResults] = useState([])
   // const data = useContext(DataContext)
   const { data, handleChangeData } = useContext(DataContext)
-  // console.log(data)
-  // function handleClick() {
-  //   handleChangeData('new data')
-  // }
 
   const dataParser = (arr) => {
     const allPosts = []
@@ -46,7 +42,7 @@ const HomeScreen = () => {
         <Row>
           {searchResults.map((post) => (
             <Col key={post.id} sm={12} md={6} lg={4} xl={3}>
-              <DynamicPost post={post} />
+              <DynamicPost post={post} url={''} />
             </Col>
           ))}
         </Row>
