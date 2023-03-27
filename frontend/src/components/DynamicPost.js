@@ -60,7 +60,7 @@ const DynamicPost = ({ post, url }) => {
   const handleClick = async () => {
     console.log(`${post.url}.json?limit=1`)
     try {
-      const response = await axios.get(`${post.url}.json?limit=5`)
+      const response = await axios.get(`${post.url}.json`)
       const { children } = response.data[1].data
       logAllComments(children)
     } catch (error) {
