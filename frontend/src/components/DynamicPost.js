@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 import axios from 'axios'
+// import { Comment, CommentList } from './DynamicComments'
 
 // will need conversion from reddit markdown syntax to html
+// This component displays a single post from Reddit and can handle comments
 const DynamicPost = ({ post, url }) => {
+  // This function checks if the post should show a link to its comments or display them
   const seePostsOrComments = (obj, url) => {
     // Split the URL into parts
     const urlParts = url.split('/')
@@ -15,6 +18,7 @@ const DynamicPost = ({ post, url }) => {
   }
 
   // Use this function to log all child comments, but will need re-working
+  // This function fetches all comments for a given child ID and logs them to the console
   async function getComments(childId) {
     const url = `https://www.reddit.com/comments/${post.id}/comment/${childId}.json`
     try {
@@ -28,6 +32,7 @@ const DynamicPost = ({ post, url }) => {
 
   let commentLine = 1
   // This option works up until the point of the children data structure changing
+  // This function logs all comments for a given post to the console
   function logAllComments(comments, level = 0) {
     comments.forEach((comment) => {
       if (comment.data.body !== undefined) {
@@ -51,8 +56,7 @@ const DynamicPost = ({ post, url }) => {
     })
   }
 
-  //The post.url just needs '/.json?limit=1' added to fetch a comment
-  // I want to console log
+  // This function fetches comments for a post and logs them to the console
   const handleClick = async () => {
     console.log(`${post.url}.json?limit=1`)
     try {
@@ -64,6 +68,7 @@ const DynamicPost = ({ post, url }) => {
     }
   }
 
+  // This component renders a single post card with a link to its comments or a display of them
   return (
     <Card className='my-3 p-3 rounded' style={{ width: '18rem' }}>
       <Card.Body>
@@ -98,3 +103,14 @@ const DynamicPost = ({ post, url }) => {
 }
 
 export default DynamicPost
+/* Changing Comments link from the post.subreddit to Comments */
+/*
+          <Link
+            className='card-link'
+            to={post.url}
+            target='_blank'
+            onClick={handleClick}
+          >
+            {post.subreddit}
+          </Link>
+*/

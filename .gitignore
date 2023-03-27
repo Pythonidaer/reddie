@@ -27,3 +27,6 @@ yarn-error.log*
 # test data
 /frontend/src/components/backupCode.js
 /frontend/src/components/commentsJson.js
+/frontend/src/components/DynamicComments.js
+/frontend/src/components/backupDynamicPost.js
+/frontend/src/components/failedDynamicPostcode/
