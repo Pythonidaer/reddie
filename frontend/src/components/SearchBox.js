@@ -30,13 +30,13 @@ const SearchBox = ({ onResponse }) => {
 
   return (
     <>
-      <h1>Test</h1>
+      <h1>Search a Subreddit</h1>
       <Form onSubmit={handleSearch} className='d-flex'>
         <Form.Control
           type='text'
           name='q'
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder='Search Products...'
+          placeholder='Search Posts...'
           className='mr-sm-2 ml-sm-5'
           value={searchTerm}
         ></Form.Control>
