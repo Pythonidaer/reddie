@@ -47,7 +47,7 @@ const HomeScreen = () => {
           ))}
         </Row>
       )}
-      {/*   <h1>Latest Posts</h1>
+      <h1>Latest Posts</h1>
 
       <Row>
         {allPosts.map((post) => (
@@ -55,7 +55,8 @@ const HomeScreen = () => {
             <Post post={post} />
           </Col>
         ))}
-      </Row> */}
+      </Row>
+      {/*  */}
     </>
   )
 }

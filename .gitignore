@@ -30,3 +30,5 @@ yarn-error.log*
 /frontend/src/components/DynamicComments.js
 /frontend/src/components/backupDynamicPost.js
 /frontend/src/components/failedDynamicPostcode/
+/frontend/src/components/commentsJson.js
+/frontend/src/components/commentsJsonCleaned.js

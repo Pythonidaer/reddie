@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 
 const CommentThread = ({ comments }) => {
   //   const filteredComments = comments.filter(
@@ -31,13 +31,18 @@ const CommentThread = ({ comments }) => {
             </Card.Title>
             <Card.Text>{comment.body}</Card.Text>
             {comment.replies && <CommentThread comments={comment.replies} />}
-            <Link
-              className='card-link'
-              to={`https://www.reddit.com${comment.link}`}
-              target='_blank'
-            >
-              View on Reddit
-            </Link>
+            <div className='d-flex justify-content-between align-items-center'>
+              <Link
+                className='card-link'
+                to={`https://www.reddit.com${comment.link}`}
+                target='_blank'
+              >
+                View on Reddit
+              </Link>
+              <Button variant='success' type='Button' disabled={false}>
+                <i className={'far fa-save'}></i>
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       ))}

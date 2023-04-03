@@ -28,9 +28,15 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/helper-module-imports": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^9.1.2",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.21"
   }
