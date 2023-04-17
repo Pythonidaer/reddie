@@ -19,7 +19,7 @@ const SearchBox = ({ onResponse }) => {
     e.preventDefault()
     try {
       const response = await axios.get(
-        `https://www.reddit.com/r/${searchTerm}.json?limit=4`
+        `https://www.reddit.com/r/${searchTerm}.json?limit=12`
       )
       const { children } = response.data.data
       onResponse(children)
@@ -27,7 +27,11 @@ const SearchBox = ({ onResponse }) => {
       console.error(error)
     }
   }
-
+  /*
+Animation libraries to look into for dynamic placeholder text change:
+- React Spring, Framer Motion, React Transition Group,
+- React Animations, Anime.js
+*/
   return (
     <>
       <h1>Search a Subreddit</h1>

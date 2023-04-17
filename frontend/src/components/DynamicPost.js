@@ -42,6 +42,8 @@ const DynamicPost = ({ post, url }) => {
           upvotes: comment.data.ups,
           author: comment.data.author,
           link: comment.data.permalink,
+          subreddit: comment.data.subreddit,
+          awards_count: comment.data.total_awards_received,
           level,
         }
 
@@ -83,18 +85,6 @@ const DynamicPost = ({ post, url }) => {
     // return the comments so they can be used recursively
     return prevComments
   }
-
-  // This function fetches comments for a post and logs them to the console
-  // const handleClick = async () => {
-  //   try {
-  //     const response = await axios.get(`${post.url}.json`)
-  //     const { children } = response.data[1].data
-  //     const fetchedComments = getComments(children)
-  //     setComments(fetchedComments)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
 
   const handleClick = async () => {
     console.log(`${post.url}.json?limit=1`)
@@ -149,7 +139,74 @@ const DynamicPost = ({ post, url }) => {
 
 export default DynamicPost
 /*
-            <CommentThread comments={comments} />
-            <br />
-            <br />
+DOES NOT WORK BECAUSE IT REPLACES THE STATE EACH TIME
+
+  async function getComments(childId) {
+    const url = `https://www.reddit.com/comments/${post.id}/comment/${childId}.json`
+    try {
+      const response = await axios.get(url)
+      const comments = response.data[1].data.children
+      logAllComments(comments)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function logAllComments(comments, level = 0) {
+    let prevComments = [...comments] // make a copy of the previous comments
+
+    for (const comment of comments) {
+      if (comment.data.body !== undefined) {
+        const newComment = {
+          body: comment.data.body,
+          upvotes: comment.data.ups,
+          author: comment.data.author,
+          link: comment.data.permalink,
+          level,
+        }
+
+        // add the new comment to the previous comments
+        prevComments = [...prevComments, newComment]
+      }
+
+      if (
+        comment.kind === 't1' &&
+        comment.data.replies !== '' &&
+        comment.data.replies !== undefined
+      ) {
+        prevComments = [
+          ...prevComments,
+          ...(await logAllComments(
+            comment.data.replies.data.children,
+            level + 1
+          )),
+        ]
+      } else if (comment.kind === 'more') {
+        for (const childId of comment.data.children) {
+          try {
+            const response = await axios.get(
+              `https://www.reddit.com/comments/${post.id}/comment/${childId}.json`
+            )
+            const childComments = response.data[1].data.children
+            prevComments = [
+              ...prevComments,
+              ...(await logAllComments(childComments, level + 1)),
+            ]
+          } catch (error) {
+            console.error(error)
+          }
+
+          // add a delay of 1 second before proceeding to the next fetch request
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+        }
+      }
+    }
+
+    // update the state with the new comments
+    setComments(prevComments)
+    console.log('MyComponent state:', { comments })
+
+    // return the comments so they can be used recursively
+    return prevComments
+  }
             */

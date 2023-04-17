@@ -32,3 +32,6 @@ yarn-error.log*
 /frontend/src/components/failedDynamicPostcode/
 /frontend/src/components/commentsJson.js
 /frontend/src/components/commentsJsonCleaned.js
+/backendBackup
+/frontend/src/screens/backupRegister.js
+/frontend/src/screens/backupLogin.js
