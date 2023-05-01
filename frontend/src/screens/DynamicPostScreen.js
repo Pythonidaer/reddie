@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { Row, Col, Container } from 'react-bootstrap'
 import DynamicPost from '../components/DynamicPost'
 import DataContext from '../components/DataContext'
@@ -12,8 +12,15 @@ const DynamicPostScreen = () => {
   const [lastPath, setLastPath] = useState('')
   const [post, setPost] = useState({})
   const url = window.location.href
+  const { id } = useParams()
+  const navigate = useNavigate()
 
   const checkURL = (url) => {
+    if (data === 'initial data') {
+      // Post data is not available yet, redirect to Home page
+      navigate('/')
+      return null
+    }
     const parts = url.split('/')
     const dynamicPostScreen = parts.find((element) => element === 'dynamicPost')
     const lastPart = parts.pop()
