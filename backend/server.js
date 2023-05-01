@@ -23,16 +23,14 @@ app.use('/api/comments', commentRoutes)
 // Serve Frontend
 const __dirname = path.resolve()
 if (process.env.NODE_ENV === 'production') {
-  // Set build folder as static
-  app.use(express.static(path.join(__dirname, '../frontend/build')))
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
 
-  // FIX: below code fixes app crashing on refresh in deployment
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-  })
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
 } else {
-  app.get('/', (_, res) => {
-    res.status(200).json({ message: 'Welcome to the Reddie API' })
+  app.get('/', (req, res) => {
+    res.send('API is running....')
   })
 }
 
