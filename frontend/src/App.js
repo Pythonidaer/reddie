@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,6 +22,7 @@ import SavedCommentScreen from './screens/SavedCommentScreen'
 
 const App = () => {
   const [data, setData] = useState('initial data')
+  const shouldRedirect = true
 
   function handleChangeData(newData) {
     setData(newData)
@@ -30,6 +36,16 @@ const App = () => {
           <Container>
             <Routes>
               <Route path='/' element={<HomeScreen />} />
+              {/* <Route
+                path='/dynamicPost/:id'
+                element={
+                  shouldRedirect ? (
+                    <Navigate replace to='/' />
+                  ) : (
+                    <DynamicPostScreen />
+                  )
+                }
+              /> */}
               <Route path='/dynamicPost/:id' element={<DynamicPostScreen />} />
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
@@ -57,6 +73,7 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+              <Route path='*' element={<Navigate replace to='/' />} />
             </Routes>
           </Container>
         </main>

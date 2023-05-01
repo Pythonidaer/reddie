@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 import DynamicPost from '../components/DynamicPost'
 import axios from 'axios'
+import { useTypewriter } from 'react-simple-typewriter'
+import typewriterSubreddits from '../features/data/typewriterSubreddits.js'
 
 const SearchBox = ({ onResponse }) => {
   const [searchTerm, setSearchTerm] = useState('')
+
+  const [text] = useTypewriter({
+    // words: ['Hello', 'From', 'Typewriter', 'Hook!'],
+    words: typewriterSubreddits,
+    loop: 0,
+  })
 
   const handleSearch = async (e) => {
     e.preventDefault()
@@ -20,6 +28,7 @@ const SearchBox = ({ onResponse }) => {
       console.error(error)
     }
   }
+
   /*
 Animation libraries to look into for dynamic placeholder text change:
 - React Spring, Framer Motion, React Transition Group,
@@ -34,7 +43,7 @@ Animation libraries to look into for dynamic placeholder text change:
           type='text'
           name='q'
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder='Search a Subreddit for Posts...'
+          placeholder={'Try searching for: ' + text}
           className='mr-sm-2 ml-sm-5'
           value={searchTerm}
         ></Form.Control>

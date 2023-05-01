@@ -5,9 +5,11 @@ import CommentThread from './CommentThread'
 import axios from 'axios'
 
 /*
-MAIN BUG:
+MAIN BUGS:
 The first time the Save Button is clicked, data is not populated
-
+When the page is refreshed, the app crashes
+- You have to manually go back to home, then refesh the page
+- Maybe useRef can fix this?
 */
 
 // will need conversion from reddit markdown syntax to html
@@ -24,6 +26,30 @@ const DynamicPost = ({ post, url }) => {
     // Check if the object's key value matches the last part of the URL
     return obj.id === lastUrlPart
   }
+
+  // TEST START - appears to break the DynamicPost component
+  // Particularly when clicking to see the Post
+  // const parseMarkdown = (markdownText) => {
+  //   const htmlText = markdownText
+  //     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+  //     .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+  //     .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+  //     .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+  //     .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+  //     .replace(/\*(.*)\*/gim, '<i>$1</i>')
+  //     .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+  //     .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+  //     .replace(/\n$/gim, '<br />')
+  //   // .replace(/(\S)&#x200B;/g, '$1 <span></span>')
+
+  //   // return htmlText.trim()
+  //   const parsedElements = [
+  //     <div dangerouslySetInnerHTML={{ __html: htmlText }} />,
+  //   ]
+  //   return parsedElements
+  // }
+  //  {parseMarkdown(post.selftext)} goes within <Card.Text>
+  // TEST END
 
   // Use this function to log all child comments, but will need re-working
   // This function fetches all comments for a given child ID and logs them to the console
@@ -115,7 +141,8 @@ const DynamicPost = ({ post, url }) => {
             {post.author}
           </Card.Subtitle>
           <Card.Text>
-            {post.selftext} <br /> <br />
+            {post.selftext}
+            <br /> <br />
             Comments: {post.num_comments}
           </Card.Text>
           {!seePostsOrComments(post, url) ? (
