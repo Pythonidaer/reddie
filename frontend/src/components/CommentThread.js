@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button, Container } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { createComment, reset } from '../features/comments/commentSlice'
 import Spinner from '../components/Spinner'
@@ -57,12 +57,16 @@ const CommentThread = ({ comments }) => {
   }
 
   return (
-    <>
+    <Container fluid>
       {filteredComments.map((comment, i) => (
         <Card
           key={i}
           className='p-3'
-          style={{ marginLeft: `${comment.level}rem` }}
+          style={{
+            marginLeft: `${comment.level}rem`,
+            width: '18rem',
+            margin: '0 auto',
+          }}
           onClick={() => handleCardClick(comment)}
         >
           <Card.Body>
@@ -92,7 +96,7 @@ const CommentThread = ({ comments }) => {
           </Card.Body>
         </Card>
       ))}
-    </>
+    </Container>
   )
 }
 
