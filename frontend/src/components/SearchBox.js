@@ -6,6 +6,8 @@ import DynamicPost from '../components/DynamicPost'
 import axios from 'axios'
 import { useTypewriter } from 'react-simple-typewriter'
 import typewriterSubreddits from '../features/data/typewriterSubreddits.js'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const SearchBox = ({ onResponse }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -25,15 +27,40 @@ const SearchBox = ({ onResponse }) => {
       const { children } = response.data.data
       onResponse(children)
     } catch (error) {
-      console.error(error)
+      let message = ''
+      switch (true) {
+        case searchTerm.length < 3 || searchTerm.length > 21:
+          message = 'Subreddits must be between 3 and 21 characters.'
+          break
+        case !/^[a-zA-Z0-9_]*$/g.test(searchTerm):
+          message =
+            'Subreddits can only contain letters, numbers and/or underscores.'
+          break
+        case error.message === 'Network Error':
+          message = 'Subreddit not found. Please try a different subreddit.'
+          break
+        case searchTerm[0].includes('_'):
+          message = 'Subreddits cannot start with underscores.'
+          break
+        default:
+          message =
+            'There was an error processing your request. Please try again later.'
+          break
+      }
+      toast.error(
+        <div>
+          <h3>Error!</h3>
+          <p>{message}</p>
+        </div>
+      )
     }
   }
 
   /*
-Animation libraries to look into for dynamic placeholder text change:
-- React Spring, Framer Motion, React Transition Group,
-- React Animations, Anime.js
-- PURPOSE: maybe to give the user a list of subreddits to consider
+Now that animation library has been added:
+- Need to randomize it so the same ones don't always appear
+- Need to find a way for searchbar to autofill with available subreddts
+     - For example, "m" maybe autopopulates magictcg
 */
   return (
     <>
