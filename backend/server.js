@@ -25,6 +25,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/comments', commentRoutes)
 
 // Serve Frontend
+const __dirname = path.resolve()
 if (process.env.NODE_ENV === 'production') {
   // Set build folder as static
   app.use(express.static(path.join(__dirname, '../frontend/build')))
