@@ -1,29 +1,69 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { Card, Button } from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
+import { createComment, reset } from '../features/comments/commentSlice'
+import Spinner from '../components/Spinner'
 
 const CommentThread = ({ comments }) => {
-  //   const filteredComments = comments.filter(
-  //     (comment) => comment.data && Object.keys(comment.data).length !== 0
-  //   )
+  const { user } = useSelector((state) => state.auth)
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.comments
+  )
 
-  //   const filteredComments = comments.filter(
-  //     (comment) => comment.data && Object.keys(comment.data).length !== 0
-  //   )
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const filteredComments = comments.filter(
     (comment) =>
       comment.hasOwnProperty('body') && !comment.hasOwnProperty('kind')
   )
 
-  filteredComments.forEach((comment) => console.log(Object.keys(comment)))
+  const [selectedComment, setSelectedComment] = useState(comments[0])
+
+  function handleCardClick(comment) {
+    setSelectedComment(comment)
+  }
+
+  function handleButtonClick(e) {
+    e.preventDefault()
+    // Pass the selected card's state data to the database
+    // You can access the selected card's state using the selectedComment state variable
+    setSelectedComment(null)
+    dispatch(createComment(selectedComment))
+  }
+
+  useEffect(() => {
+    if (selectedComment) {
+      const { author, awards_count, body, link, subreddit, upvotes } =
+        selectedComment
+    }
+
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (isSuccess) {
+      dispatch(reset())
+      navigate('/comments')
+    }
+
+    dispatch(reset())
+  }, [selectedComment, dispatch, isError, isSuccess, navigate, message])
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
   return (
     <>
       {filteredComments.map((comment, i) => (
         <Card
-          key={comment.id}
+          key={i}
           className='p-3'
           style={{ marginLeft: `${comment.level}rem` }}
+          onClick={() => handleCardClick(comment)}
         >
           <Card.Body>
             <Card.Title>
@@ -39,7 +79,13 @@ const CommentThread = ({ comments }) => {
               >
                 View on Reddit
               </Link>
-              <Button variant='success' type='Button' disabled={false}>
+              <Button
+                variant='success'
+                type='Button'
+                className='btn btn-success'
+                disabled={!user}
+                onClick={handleButtonClick}
+              >
                 <i className={'far fa-save'}></i>
               </Button>
             </div>

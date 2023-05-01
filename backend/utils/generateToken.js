@@ -13,6 +13,9 @@ const generateToken = (id) => {
 export default generateToken
 
 /*
+I am not well-versed on CyberSec, so just commented out expirations for now
+
+NOTES from ChatGPT
 It's not strictly necessary to add an expiresIn object when creating a JSON Web Token (JWT) using the jsonwebtoken package. However, it's generally a good practice to include an expiration time in the token to ensure that it's only valid for a limited period.
 
 The expiresIn object specifies the amount of time after which the token should expire, and it can be set to a string or a number of seconds. For example, { expiresIn: '1h' } sets the token to expire after one hour, while { expiresIn: 60 } sets it to expire after 60 seconds.

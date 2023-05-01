@@ -34,7 +34,7 @@ const DynamicPostScreen = () => {
       <Container fluid>
         <Row>
           <Col className='d-flex justify-content-center'>
-            <DynamicPost post={post} url={url} />
+            <DynamicPost key={post.id} post={post} url={url} />
           </Col>
         </Row>
       </Container>
@@ -43,28 +43,3 @@ const DynamicPostScreen = () => {
 }
 
 export default DynamicPostScreen
-/*
-  // console.log(data)
-  // const { id } = useParams()
-
-  // Maybe use this if there is no prop past to this
-  // if (!feedback || feedback.length === 0) {
-  //   return <p>No Feedback Yet</p>
-  // }
-  // const post = searchResults.find((post) => post.id === id)
-
-  // const params = useParams()
-  // console.log(params.id)
-
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     // const { data } = await axios.get(
-  //     //   params.id ? `/api/posts/${params.id}` : `/api/posts/${post.id}`
-  //     // )
-  //     // setPost(post)
-  //     // DynamicPost post={post} />
-  //   }
-
-  //   fetchPost()
-  // }, [])
-  */

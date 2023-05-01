@@ -25,13 +25,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # test data
-/frontend/src/components/backupCode.js
-/frontend/src/components/commentsJson.js
-/frontend/src/components/DynamicComments.js
-/frontend/src/components/backupDynamicPost.js
-/frontend/src/components/failedDynamicPostcode/
+/backendBackup
+/frontend/src/screens/NewCommentScreen.js
+/frontend/src/components/commentsChildrenJson.js
 /frontend/src/components/commentsJson.js
 /frontend/src/components/commentsJsonCleaned.js
-/backendBackup
-/frontend/src/screens/backupRegister.js
-/frontend/src/screens/backupLogin.js
+/frontend/hooks
+/backend/data
+/backend/seeder.js

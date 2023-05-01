@@ -2,10 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Form, Button } from 'react-bootstrap'
-// import { FaSignInAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../features/auth/authSlice'
-// import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 const LoginScreen = () => {
@@ -49,7 +47,7 @@ const LoginScreen = () => {
         // getting a good response from our API or catch the AsyncThunkAction
         // rejection to show an error message
         toast.success(`Logged in as ${user.username}`)
-        navigate('/')
+        navigate('/comments')
       })
       .catch(toast.error)
   }
@@ -58,49 +56,6 @@ const LoginScreen = () => {
     return <Spinner />
   }
 
-  /*
-  // const { user, isLoading, isError, isSuccess, message } = useSelector(
-  //   (state) => state.auth
-  // )
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message)
-  //   }
-
-  //   // Redirect when logged in, or would I prefer redirect to a profile?!?
-  //   if (isSuccess || user) {
-  //     navigate('/')
-  //   }
-
-  //   dispatch(reset())
-  // }, [isError, isSuccess, user, message, navigate, dispatch])
-
-  // const onChange = (e) => {
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [e.target.name]: e.target.value,
-  //   }))
-  // }
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault()
-
-  //   const userData = {
-  //     email,
-  //     password,
-  //   }
-
-  //   dispatch(login(userData))
-  // }
-
-  // const { email, password } = formData
-
-  // // needs CSS from Support Ticket repo
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-*/
   return (
     <>
       <section className='heading'>

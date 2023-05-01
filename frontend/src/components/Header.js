@@ -4,9 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-// import { FaUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 
-// const Header = ({ isLoggedIn }) => {
 const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -29,7 +27,7 @@ const Header = () => {
             <Nav>
               {user ? (
                 <>
-                  <LinkContainer to='/content'>
+                  <LinkContainer to='/comments'>
                     <Nav.Link>
                       <i className='fa-solid fa-heart-circle-check'></i> Content
                     </Nav.Link>
@@ -37,6 +35,7 @@ const Header = () => {
                   <LinkContainer to='/'>
                     <Nav.Link>
                       <i className='fa-solid fa-circle-xmark'></i>
+                      {/* Need to change as Button is mis-aligned */}
                       <Button onClick={onLogout}>Logout</Button>
                     </Nav.Link>
                   </LinkContainer>
@@ -65,20 +64,3 @@ const Header = () => {
 }
 
 export default Header
-/* 
-{user ? (
-  <li>
-     <button onclick={onLogouit}>Logout</button>
-    </li>
-) : (<li>
-  <Link to='/login'>
-     <FaSignInAlt /> Login
-  </Link>
-</li>
-<li>
-  <Link to='/register'>
-    <FaUser /> Register
-  </Link>
-</li>
-  )}
-*/

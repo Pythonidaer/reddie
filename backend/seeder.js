@@ -2,10 +2,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import users from './data/users.js'
-import posts from './data/posts.js'
 import comments from './data/comments.js'
 import User from './models/userModel.js'
-import Post from './models/postModel.js'
 import Comment from './models/commentModel.js'
 import connectDB from './config/db.js'
 
@@ -25,7 +23,6 @@ comments.forEach((comment) => {
 
 const importData = async () => {
   try {
-    await Post.deleteMany()
     await User.deleteMany()
     await Comment.deleteMany()
 
