@@ -120,7 +120,10 @@ const DynamicPost = ({ post, url }) => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.get(`${post.url}.json`)
+      console.log(post.permalink)
+      const response = await axios.get(
+        `https://www.reddit.com${post.permalink}.json`
+      )
       const { children } = response.data[1].data
       logAllComments(children)
     } catch (error) {
@@ -155,11 +158,21 @@ const DynamicPost = ({ post, url }) => {
               </Link>
             </div>
           ) : (
-            <div>
-              <Button variant='primary' className='btn' onClick={handleClick}>
-                View Comments
-              </Button>
-            </div>
+            <>
+              <div>
+                <Button variant='primary' className='btn' onClick={handleClick}>
+                  View Comments
+                </Button>
+                <Link
+                  className='card-link'
+                  style={{ marginLeft: '1rem !important;' }}
+                  to={post.url}
+                  target='_blank'
+                >
+                  See Post
+                </Link>
+              </div>
+            </>
           )}
         </Card.Body>
       </Card>
