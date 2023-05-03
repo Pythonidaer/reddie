@@ -29,6 +29,13 @@ main {
   animation: spin 1.2s linear infinite;
 }
 
+.logout {
+  background: transparent;
+  border: none;
+  color: #8c8c8c;
+  margin-top: -5px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

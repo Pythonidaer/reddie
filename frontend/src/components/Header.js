@@ -34,9 +34,9 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to='/'>
                     <Nav.Link>
-                      <i className='fa-solid fa-circle-xmark'></i>
+                      
                       {/* Need to change as Button is mis-aligned */}
-                      <Button onClick={onLogout}>Logout</Button>
+                      <Button onClick={onLogout} className='logout'><i className='fa-solid fa-circle-xmark'></i> Logout</Button>
                     </Nav.Link>
                   </LinkContainer>
                 </>
