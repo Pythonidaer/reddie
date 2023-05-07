@@ -64,7 +64,7 @@ const CommentThread = ({ comments }) => {
           className='p-3'
           style={{
             marginLeft: `${comment.level}rem`,
-            maxWidth: '18rem',
+            width: '18rem',
             margin: '0 auto',
           }}
           onClick={() => handleCardClick(comment)}
