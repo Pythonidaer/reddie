@@ -8,12 +8,30 @@ import { useTypewriter } from 'react-simple-typewriter'
 import typewriterSubreddits from '../features/data/typewriterSubreddits.js'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Typeahead } from 'react-bootstrap-typeahead'
+import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 const SearchBox = ({ onResponse }) => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [singleSelections, setSingleSelections] = useState([])
 
+  const updatedSubreddits = typewriterSubreddits.map((subreddit, i) => {
+    return { name: subreddit }
+  })
+  const sortedSubreddits = updatedSubreddits.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+
+  const handleSingleSelections = (selected) => {
+    if (selected && selected.length) {
+      setSearchTerm(selected[0].name)
+    } else {
+      setSearchTerm('')
+    }
+  }
+
+  // typewriterSubreddits
   const [text] = useTypewriter({
-    // words: ['Hello', 'From', 'Typewriter', 'Hook!'],
     words: typewriterSubreddits,
     loop: 0,
   })
@@ -58,22 +76,23 @@ const SearchBox = ({ onResponse }) => {
 
   /*
 Now that animation library has been added:
-- Need to randomize it so the same ones don't always appear
-- Need to find a way for searchbar to autofill with available subreddts
-     - For example, "m" maybe autopopulates magictcg
+- Need to randomize it so the same ones don't always appear in typewriter
 */
   return (
     <>
       <h1>Search a Subreddit</h1>
       <Form onSubmit={handleSearch} className='d-flex'>
-        <Form.Control
+        <Typeahead
+          id='basic-typeahead-single'
           type='text'
           name='q'
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder={'Try searching for: ' + text}
-          className='mr-sm-2 ml-sm-5'
-          value={searchTerm}
-        ></Form.Control>
+          labelKey='name'
+          onChange={handleSingleSelections}
+          options={sortedSubreddits}
+          placeholder={'Try typing in: ' + text}
+          selected={searchTerm ? [{ name: searchTerm }] : []}
+          className='w-100'
+        />
         <Button
           type='submit'
           variant='outline-success'
