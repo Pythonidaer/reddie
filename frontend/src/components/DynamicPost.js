@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Button, Card } from 'react-bootstrap'
 import CommentThread from './CommentThread'
 import axios from 'axios'
+import ReactReadMoreReadLess from 'react-read-more-read-less'
 
 /*
 MAIN BUGS:
@@ -143,11 +144,18 @@ const DynamicPost = ({ post, url }) => {
           <Card.Subtitle className='mb-2 text-muted'>
             {post.author}
           </Card.Subtitle>
-          <Card.Text>
-            {post.selftext}
-            <br /> <br />
-            Comments: {post.num_comments}
-          </Card.Text>
+          {post.selftext ? (
+            <ReactReadMoreReadLess
+              charLimit={200}
+              readMoreText={'Read more ▼'}
+              readLessText={'Read less ▲'}
+            >
+              {post.selftext}
+            </ReactReadMoreReadLess>
+          ) : (
+            <Card.Text>{post.selftext}</Card.Text>
+          )}
+          <Card.Text>Comments: {post.num_comments}</Card.Text>
           {!seePostsOrComments(post, url) ? (
             <div>
               <Link className='card-link' to={`/dynamicPost/${post.id}`}>
@@ -183,3 +191,15 @@ const DynamicPost = ({ post, url }) => {
 }
 
 export default DynamicPost
+/*
+<Card.Text>
+{post.selftext}
+<br /> <br />
+Comments: {post.num_comments}
+</Card.Text>
+*/
+
+/*
+          <Card.Text>{post.selftext}</Card.Text>
+          <Card.Text>Comments: {post.num_comments}</Card.Text>
+          */
