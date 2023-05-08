@@ -112,7 +112,6 @@ const DynamicPost = ({ post, url }) => {
 
     // update the state with the new comments
     setComments(prevComments)
-    // console.log('MyComponent state:', { comments })
 
     // return the comments so they can be used recursively
     return prevComments
@@ -120,7 +119,6 @@ const DynamicPost = ({ post, url }) => {
 
   const handleClick = async () => {
     try {
-      console.log(post.permalink)
       const response = await axios.get(
         `https://www.reddit.com${post.permalink}.json`
       )
@@ -132,6 +130,8 @@ const DynamicPost = ({ post, url }) => {
   }
 
   // This component renders a single post card with a link to its comments or a display of them
+  // This style might be worth changing to get more text to appear
+  // Either way, better to start thinking across multiple screens sooner than later
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Card

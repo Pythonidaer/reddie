@@ -18,6 +18,7 @@ function SavedComment({ comment }) {
   function handleButtonClick(e) {
     e.preventDefault()
     dispatch(deleteComment(comment._id))
+    window.location.reload()
   }
 
   //   Reset seemed to cause issues so commented out for now
@@ -27,11 +28,8 @@ function SavedComment({ comment }) {
     }
 
     if (isSuccess) {
-      //   dispatch(reset())
       navigate('/comments')
     }
-
-    // dispatch(reset())
   }, [dispatch, isError, isSuccess, navigate, message])
 
   if (isLoading) {

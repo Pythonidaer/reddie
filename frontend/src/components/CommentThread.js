@@ -20,26 +20,12 @@ const CommentThread = ({ comments }) => {
       comment.hasOwnProperty('body') && !comment.hasOwnProperty('kind')
   )
 
-  const [selectedComment, setSelectedComment] = useState(comments[0])
-
-  function handleCardClick(comment) {
-    setSelectedComment(comment)
-  }
-
-  function handleButtonClick(e) {
+  function handleButtonClick(e, comment) {
     e.preventDefault()
-    // Pass the selected card's state data to the database
-    // You can access the selected card's state using the selectedComment state variable
-    setSelectedComment(null)
-    dispatch(createComment(selectedComment))
+    dispatch(createComment(comment))
   }
 
   useEffect(() => {
-    if (selectedComment) {
-      const { author, awards_count, body, link, subreddit, upvotes } =
-        selectedComment
-    }
-
     if (isError) {
       toast.error(message)
     }
@@ -50,7 +36,7 @@ const CommentThread = ({ comments }) => {
     }
 
     dispatch(reset())
-  }, [selectedComment, dispatch, isError, isSuccess, navigate, message])
+  }, [dispatch, isError, isSuccess, navigate, message])
 
   if (isLoading) {
     return <Spinner />
@@ -66,7 +52,6 @@ const CommentThread = ({ comments }) => {
             marginLeft: `${comment.level}rem`,
             maxWidth: '18rem',
           }}
-          onClick={() => handleCardClick(comment)}
         >
           <Card.Body>
             <Card.Title>
@@ -87,7 +72,7 @@ const CommentThread = ({ comments }) => {
                 type='Button'
                 className='btn btn-success'
                 disabled={!user}
-                onClick={handleButtonClick}
+                onClick={(e) => handleButtonClick(e, comment)}
               >
                 <i className={'far fa-save'}></i>
               </Button>
