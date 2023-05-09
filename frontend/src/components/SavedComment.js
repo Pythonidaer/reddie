@@ -5,6 +5,7 @@ import { Button, Card } from 'react-bootstrap'
 import { deleteComment, reset } from '../features/comments/commentSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../components/Spinner'
+import ReactReadMoreReadLess from 'react-read-more-read-less'
 
 function SavedComment({ comment }) {
   const { user } = useSelector((state) => state.auth)
@@ -46,11 +47,22 @@ function SavedComment({ comment }) {
         <Card.Subtitle className='mb-2 text-muted'>
           {comment.subreddit}
         </Card.Subtitle>
+
+        {comment.body ? (
+          <ReactReadMoreReadLess
+            charLimit={200}
+            readMoreText={'Read more ▼'}
+            readLessText={'Read less ▲'}
+          >
+            {comment.body}
+          </ReactReadMoreReadLess>
+        ) : (
+          <Card.Text>{comment.body}</Card.Text>
+        )}
+
         <Card.Text>
-          {comment.body} <br />
-          <br />
-          <i className='fa-solid fa-thumbs-up'></i>
-          <span> {comment.upvotes}</span>
+          <i className='fa-solid pr-3 fa-thumbs-up'></i>
+          {' ' + comment.upvotes}
         </Card.Text>
 
         <div>
@@ -73,7 +85,7 @@ function SavedComment({ comment }) {
             disabled={!user}
             onClick={handleButtonClick}
           >
-            <i className={'far fa-save'}></i>
+            <i className={'far fa-trash-can'}></i>
           </Button>
         </div>
       </Card.Body>
