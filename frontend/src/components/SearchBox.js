@@ -30,12 +30,45 @@ const SearchBox = ({ onResponse }) => {
     }
   }
 
-  // typewriterSubreddits
-  const [text] = useTypewriter({
-    words: typewriterSubreddits,
-    loop: 0,
+  /*
+This function takes an array as input and returns a new shuffled array using the Fisher-Yates shuffle algorithm. The algorithm works by iterating over each item in the array, selecting a random item from the array, and swapping it with the current item. This is repeated for each item in the array, resulting in a randomized order.
+*/
+  const shuffleArray = (array) => {
+    // create a copy of the input array
+    const randomizedSubreddits = [...array]
+    // shuffle the array using the Fisher-Yates shuffle algorithm
+    randomizedSubreddits.forEach((_, i, arr) => {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+    })
+    // return the shuffled array
+    return randomizedSubreddits
+  }
+
+  /*
+  This line declares a state variable randomizedArray and sets its initial value to the typewriterSubreddits array. This array is used as the input to the useTypewriter hook.
+*/
+  const [randomizedArray, setRandomizedArray] = useState(typewriterSubreddits)
+  /*
+This line initializes the text state variable and the setText function using the useTypewriter hook. The words property of the object passed to the hook is set to randomizedArray, so the typewriter will go through the randomized array each time it loops.
+*/
+  // do I need setText here?
+  const [text, setText] = useTypewriter({
+    words: randomizedArray,
+    loop: true,
+    delay: 100,
   })
 
+  /*
+  This useEffect hook is called once when the component mounts and uses the shuffleArray function to create a new randomized array. The randomizedArray state variable is then updated with this new array, causing the component to re-render and the typewriter to start looping through the new randomized array. The empty dependency array [] ensures that this effect runs only once, when the component mounts.
+  */
+  useEffect(() => {
+    setRandomizedArray(shuffleArray(typewriterSubreddits))
+  }, [])
+  // Needs documentation end
+
+  // This function fetches a subreddit's posts
+  // It will notify the user of an error if they provide invalid input
   const handleSearch = async (e) => {
     e.preventDefault()
     try {
@@ -74,10 +107,6 @@ const SearchBox = ({ onResponse }) => {
     }
   }
 
-  /*
-Now that animation library has been added:
-- Need to randomize it so the same ones don't always appear in typewriter
-*/
   return (
     <>
       <h1>Search a Subreddit</h1>
