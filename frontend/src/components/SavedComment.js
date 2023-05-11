@@ -5,7 +5,8 @@ import { Button, Card } from 'react-bootstrap'
 import { deleteComment, reset } from '../features/comments/commentSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../components/Spinner'
-import ReactReadMoreReadLess from 'react-read-more-read-less'
+import { parse } from 'marked'
+import ShowMoreText from 'react-show-more-text'
 
 function SavedComment({ comment }) {
   const { user } = useSelector((state) => state.auth)
@@ -37,6 +38,9 @@ function SavedComment({ comment }) {
     return <Spinner />
   }
 
+  // convert Reddit API's returned markdown to HTML and set dangerously
+  const html = parse(comment.body)
+
   return (
     <Card
       className='my-3 p-3 rounded'
@@ -49,13 +53,17 @@ function SavedComment({ comment }) {
         </Card.Subtitle>
 
         {comment.body ? (
-          <ReactReadMoreReadLess
-            charLimit={200}
-            readMoreText={'Read more ▼'}
-            readLessText={'Read less ▲'}
+          <ShowMoreText
+            lines={3}
+            more='View'
+            less='Hide'
+            anchorClass='text-info fw-bold'
+            className='card-text'
+            // below default is ...
+            truncatedEndingComponent=' '
           >
-            {comment.body}
-          </ReactReadMoreReadLess>
+            <Card.Text dangerouslySetInnerHTML={{ __html: html }} />
+          </ShowMoreText>
         ) : (
           <Card.Text>{comment.body}</Card.Text>
         )}
