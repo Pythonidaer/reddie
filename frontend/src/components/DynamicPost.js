@@ -104,7 +104,13 @@ const DynamicPost = ({ post, url }) => {
   // Either way, better to start thinking across multiple screens sooner than later
 
   // convert Reddit API's returned markdown to HTML and set dangerously
-  const html = parse(post.selftext)
+
+  const html = parse(post.selftext, {
+    silent: true,
+  })
+
+  // console.log(html)
+  // console.log(post.id)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
