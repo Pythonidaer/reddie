@@ -30,6 +30,17 @@ const SearchBox = ({ onResponse }) => {
     }
   }
 
+  // test
+  // const handleSingleSelections = (selected) => {
+  //   if (selected && selected.length > 0) {
+  //     setSearchTerm(selected[0].name)
+  //   } else {
+  //     setSearchTerm(inputRef.current.state.text)
+  //   }
+  // }
+
+  // test end
+
   /*
 This function takes an array as input and returns a new shuffled array using the Fisher-Yates shuffle algorithm. The algorithm works by iterating over each item in the array, selecting a random item from the array, and swapping it with the current item. This is repeated for each item in the array, resulting in a randomized order.
 */
@@ -107,6 +118,24 @@ This line initializes the text state variable and the setText function using the
     }
   }
 
+  /*
+  
+  const handleSearchBlur = () => {
+    // Your search functionality here
+    console.log(searchTerm)
+  }
+
+  const handleBlur = () => {
+    handleSearchBlur()
+  }
+  
+          onBlur={handleBlur}
+
+
+Removed from Typeahead below placeholder
+          selected={searchTerm ? [{ name: searchTerm }] : null}
+
+  */
   return (
     <>
       <h1>Search a Subreddit</h1>
@@ -119,7 +148,8 @@ This line initializes the text state variable and the setText function using the
           onChange={handleSingleSelections}
           options={sortedSubreddits}
           placeholder={'Try typing in: ' + text}
-          selected={searchTerm ? [{ name: searchTerm }] : []}
+          inputValue={searchTerm}
+          onInputChange={(input) => setSearchTerm(input)}
           className='w-100'
         />
         <Button
