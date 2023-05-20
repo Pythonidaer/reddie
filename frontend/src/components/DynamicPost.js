@@ -21,70 +21,33 @@ const DynamicPost = ({ post, url }) => {
     return obj.id === lastUrlPart
   }
 
-  // Use this function to log all child comments, but will need re-working
-  // This function fetches all comments for a given child ID and logs them to the console
-  async function getComments(childId) {
-    const url = `https://www.reddit.com/comments/${post.id}/comment/${childId}.json`
-    try {
-      const response = await axios.get(url)
-      const comments = response.data[1].data.children
-      logAllComments(comments)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  function logAllComments(comments, level = 0) {
-    let prevComments = [...comments] // make a copy of the previous comments
-
-    comments.forEach((comment) => {
-      if (comment.data.body !== undefined) {
+  // TEST START
+  let totalCount = 0
+  const handleChildren = (childrenComments, level = 0, results = []) => {
+    childrenComments.forEach((child) => {
+      // need logic for "more" Kind objects
+      // except "more" require separate data logic (see below)
+      //
+      if (
+        child.kind === 't1' &&
+        child.data.replies !== '' &&
+        child.data.replies !== undefined
+      ) {
         const newComment = {
-          body: comment.data.body,
-          upvotes: comment.data.ups,
-          author: comment.data.author,
-          link: comment.data.permalink,
-          subreddit: comment.data.subreddit,
-          awards_count: comment.data.total_awards_received,
+          body: child.data.body,
+          upvotes: child.data.ups,
+          author: child.data.author,
+          link: child.data.permalink,
+          subreddit: child.data.subreddit,
+          awards_count: child.data.total_awards_received,
           level,
         }
-
-        // add the new comment to the previous comments
-        prevComments = [...prevComments, newComment]
-      }
-
-      if (
-        comment.kind === 't1' &&
-        comment.data.replies !== '' &&
-        comment.data.replies !== undefined
-      ) {
-        prevComments = [
-          ...prevComments,
-          ...logAllComments(comment.data.replies.data.children, level + 1),
-        ]
-      } else if (comment.kind === 'more') {
-        comment.data.children.forEach(async (childId) => {
-          try {
-            const response = await axios.get(
-              `https://www.reddit.com/comments/${post.id}/comment/${childId}.json`
-            )
-            const childComments = response.data[1].data.children
-            prevComments = [
-              ...prevComments,
-              ...logAllComments(childComments, level + 1),
-            ]
-          } catch (error) {
-            console.error(error)
-          }
-        })
+        results.push(newComment)
+        handleChildren(child.data.replies.data.children, level + 1, results)
       }
     })
 
-    // update the state with the new comments
-    setComments(prevComments)
-
-    // return the comments so they can be used recursively
-    return prevComments
+    return results
   }
 
   const handleClick = async () => {
@@ -93,7 +56,8 @@ const DynamicPost = ({ post, url }) => {
         `https://www.reddit.com${post.permalink}.json`
       )
       const { children } = response.data[1].data
-      logAllComments(children)
+      const fetchedComments = handleChildren(children)
+      setComments(fetchedComments)
     } catch (error) {
       console.error(error)
     }
@@ -109,19 +73,28 @@ const DynamicPost = ({ post, url }) => {
     silent: true,
   })
 
-  // console.log(html)
-  // console.log(post.id)
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Card
-        className='my-3 p-3 rounded'
-        style={{ width: '18rem', margin: '0 auto' }}
+        className='my-3 p-1 rounded'
+        style={{
+          width: '100%',
+          margin: '0 auto',
+          '@media (maxWidth: 767px)': {
+            maxWidth: '18rem',
+          },
+          '@media (minWidth: 768px)': {
+            maxWidth: '800px',
+          },
+          '@media (minWidth: 992px)': {
+            maxWidth: '800px',
+          },
+        }}
       >
         <Card.Body>
-          <Card.Title>{post.title}</Card.Title>
+          <Card.Title className={'pb-1'}>{post.title}</Card.Title>
           <Card.Subtitle className='mb-2 text-muted'>
-            {post.author}
+            Posted by u/{post.author}
           </Card.Subtitle>
           {post.selftext ? (
             <ShowMoreText
@@ -138,7 +111,7 @@ const DynamicPost = ({ post, url }) => {
           ) : (
             <Card.Text dangerouslySetInnerHTML={{ __html: html }} />
           )}
-          <Card.Text>Comments: {post.num_comments}</Card.Text>
+          <Card.Text>{post.num_comments} Comments</Card.Text>
           {!seePostsOrComments(post, url) ? (
             <div>
               <Link className='card-link' to={`/dynamicPost/${post.id}`}>
@@ -150,12 +123,12 @@ const DynamicPost = ({ post, url }) => {
             </div>
           ) : (
             <>
-              <div>
+              <div className='d-flex justify-content-between'>
                 <Button variant='primary' className='btn' onClick={handleClick}>
                   View Comments
                 </Button>
                 <Link
-                  className='card-link'
+                  className='btn btn-secondary'
                   style={{ marginLeft: '1rem !important;' }}
                   to={post.url}
                   target='_blank'
@@ -167,22 +140,11 @@ const DynamicPost = ({ post, url }) => {
           )}
         </Card.Body>
       </Card>
-
-      <CommentThread comments={comments} style={{ width: '36rem' }} />
+      {comments && comments.length > 0 && (
+        <CommentThread comments={comments} style={{ width: '36rem' }} />
+      )}
     </div>
   )
 }
 
 export default DynamicPost
-/*
-<Card.Text>
-{post.selftext}
-<br /> <br />
-Comments: {post.num_comments}
-</Card.Text>
-*/
-
-/*
-          <Card.Text>{post.selftext}</Card.Text>
-          <Card.Text>Comments: {post.num_comments}</Card.Text>
-          */

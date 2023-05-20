@@ -16,7 +16,6 @@ import HomeScreen from './screens/HomeScreen'
 import DynamicPostScreen from './screens/DynamicPostScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
-// import NewCommentScreen from './screens/NewCommentScreen'
 import SavedCommentsScreen from './screens/SavedCommentsScreen'
 import SavedCommentScreen from './screens/SavedCommentScreen'
 
@@ -36,27 +35,9 @@ const App = () => {
           <Container>
             <Routes>
               <Route path='/' element={<HomeScreen />} />
-              {/* <Route
-                path='/dynamicPost/:id'
-                element={
-                  shouldRedirect ? (
-                    <Navigate replace to='/' />
-                  ) : (
-                    <DynamicPostScreen />
-                  )
-                }
-              /> */}
               <Route path='/dynamicPost/:id' element={<DynamicPostScreen />} />
               <Route path='/login' element={<LoginScreen />} />
               <Route path='/register' element={<RegisterScreen />} />
-              {/* <Route
-                path='/new-comment'
-                element={
-                  <PrivateRoute>
-                    <NewCommentScreen />
-                  </PrivateRoute>
-                }
-              /> */}
               <Route
                 path='/comments'
                 element={

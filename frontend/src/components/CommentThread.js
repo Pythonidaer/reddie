@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Card, Button, Container } from 'react-bootstrap'
+import { Card, Button, Container, Pagination } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { createComment, reset } from '../features/comments/commentSlice'
 import Spinner from '../components/Spinner'
+import { parse } from 'marked'
+import ShowMoreText from 'react-show-more-text'
 
 const CommentThread = ({ comments }) => {
   const { user } = useSelector((state) => state.auth)
@@ -20,7 +22,15 @@ const CommentThread = ({ comments }) => {
       comment.hasOwnProperty('body') && !comment.hasOwnProperty('kind')
   )
 
-  function handleButtonClick(e, comment) {
+  // Pagination Logic
+  const pageItemsPerPage = 5
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const startIndex = (currentPage - 1) * pageItemsPerPage
+  const endIndex = startIndex + pageItemsPerPage
+  const paginatedComments = filteredComments.slice(startIndex, endIndex)
+
+  const handleButtonClick = (e, comment) => {
     e.preventDefault()
     dispatch(createComment(comment))
   }
@@ -43,25 +53,54 @@ const CommentThread = ({ comments }) => {
   }
 
   return (
-    <Container fluid>
-      {filteredComments.map((comment, i) => (
+    <Container fluid className='p-0'>
+      {paginatedComments.map((comment, i) => (
         <Card
           key={i}
-          className='p-3'
+          className='p-1'
           style={{
             marginLeft: `${comment.level}rem`,
-            maxWidth: '18rem',
+            '@media (maxWidth: 767px)': {
+              maxWidth: '100%',
+            },
+            '@media (minWidth: 768px)': {
+              maxWidth: '800px',
+            },
+            '@media (minWidth: 992px)': {
+              maxWidth: '800px',
+            },
           }}
         >
           <Card.Body>
             <Card.Title>
               Author: {comment.author} | Upvotes: {comment.upvotes}
             </Card.Title>
-            <Card.Text>{comment.body}</Card.Text>
-            {comment.replies && <CommentThread comments={comment.replies} />}
+            {comment.body ? (
+              <ShowMoreText
+                lines={3}
+                more='View'
+                less='Hide'
+                anchorClass='text-info fw-bold'
+                className='card-text pb-2'
+                // below default is ...
+                truncatedEndingComponent=' '
+              >
+                <Card.Text
+                  dangerouslySetInnerHTML={{
+                    __html: parse(comment.body, { silent: true }),
+                  }}
+                />
+              </ShowMoreText>
+            ) : (
+              <Card.Text
+                dangerouslySetInnerHTML={{
+                  __html: parse(comment.body, { silent: true }),
+                }}
+              />
+            )}
             <div className='d-flex justify-content-between align-items-center'>
               <Link
-                className='card-link'
+                className='btn btn-secondary'
                 to={`https://www.reddit.com${comment.link}`}
                 target='_blank'
               >
@@ -80,6 +119,31 @@ const CommentThread = ({ comments }) => {
           </Card.Body>
         </Card>
       ))}
+
+      <Pagination className=' mt-3 d-flex flex-wrap'>
+        <Pagination.Prev
+          onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
+          disabled={currentPage === 1}
+        />
+        {Array.from({
+          length: Math.ceil(filteredComments.length / pageItemsPerPage),
+        }).map((_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
+          disabled={
+            currentPage ===
+            Math.ceil(filteredComments.length / pageItemsPerPage)
+          }
+        />
+      </Pagination>
     </Container>
   )
 }
