@@ -44,12 +44,3 @@ const DynamicPostScreen = () => {
 }
 
 export default DynamicPostScreen
-/*
-<Container fluid>
-<Row>
-  <Col className='d-flex justify-content-center'>
-    <DynamicPost key={post.id} post={post} url={url} />
-  </Col>
-</Row>
-</Container>
-*/
