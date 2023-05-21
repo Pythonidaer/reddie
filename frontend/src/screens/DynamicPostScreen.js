@@ -38,15 +38,18 @@ const DynamicPostScreen = () => {
       <Link className='btn btn-dark my-3' to='/'>
         Go Back
       </Link>
-      <Container fluid>
-        <Row>
-          <Col className='d-flex justify-content-center'>
-            <DynamicPost key={post.id} post={post} url={url} />
-          </Col>
-        </Row>
-      </Container>
+      <DynamicPost key={post.id} post={post} url={url} />
     </>
   )
 }
 
 export default DynamicPostScreen
+/*
+<Container fluid>
+<Row>
+  <Col className='d-flex justify-content-center'>
+    <DynamicPost key={post.id} post={post} url={url} />
+  </Col>
+</Row>
+</Container>
+*/
