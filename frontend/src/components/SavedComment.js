@@ -16,11 +16,17 @@ function SavedComment({ comment }) {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const url = window.location.href
+  const parts = url.split('/')
 
   function handleButtonClick(e) {
     e.preventDefault()
     dispatch(deleteComment(comment._id))
-    window.location.reload()
+    if (parts[parts.length - 1] === 'comments') {
+      window.location.reload()
+    } else {
+      navigate('/comments')
+    }
   }
 
   //   Reset seemed to cause issues so commented out for now
@@ -39,7 +45,11 @@ function SavedComment({ comment }) {
   }
 
   // convert Reddit API's returned markdown to HTML and set dangerously
-  const html = parse(comment.body)
+  // const html = parse(comment.body)
+
+  const html = parse(comment.body, {
+    silent: true,
+  })
 
   return (
     <Card
