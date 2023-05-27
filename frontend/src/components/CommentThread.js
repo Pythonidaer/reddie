@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Card, Button, Container, Pagination } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'

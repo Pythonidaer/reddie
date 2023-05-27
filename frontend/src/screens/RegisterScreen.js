@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Form, Button } from 'react-bootstrap'
-// import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
@@ -60,7 +59,6 @@ const RegisterScreen = () => {
 
   const { username, email, password, password2 } = formData
 
-  // needs CSS from Support Ticket repo
   if (isLoading) {
     return <Spinner />
   }

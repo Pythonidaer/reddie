@@ -91,10 +91,6 @@ export const deleteComment = createAsyncThunk(
   }
 )
 
-// NOTE: removed loading, isSuccess state as it can be infered from presence or
-// absence of tickets for simpler state management with no need for a reset
-// function
-
 export const commentSlice = createSlice({
   name: 'comment',
   initialState,

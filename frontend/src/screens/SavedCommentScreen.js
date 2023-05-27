@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-// How can this be used?
-import Modal from 'react-modal'
 import { useSelector, useDispatch } from 'react-redux'
 import { getComment } from '../features/comments/commentSlice'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import SavedComment from '../components/SavedComment'
 
@@ -12,7 +10,6 @@ import { Row, Col, Container } from 'react-bootstrap'
 
 const SavedCommentScreen = () => {
   const { comment } = useSelector((state) => state.comments)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { commentId } = useParams()
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Card } from 'react-bootstrap'
-import { deleteComment, reset } from '../features/comments/commentSlice'
+import { deleteComment } from '../features/comments/commentSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../components/Spinner'
 import { parse } from 'marked'
@@ -45,8 +45,6 @@ function SavedComment({ comment }) {
   }
 
   // convert Reddit API's returned markdown to HTML and set dangerously
-  // const html = parse(comment.body)
-
   const html = parse(comment.body, {
     silent: true,
   })

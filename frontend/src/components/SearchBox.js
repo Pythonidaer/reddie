@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Row, Col } from 'react-bootstrap'
-import DynamicPost from '../components/DynamicPost'
 import axios from 'axios'
 import { useTypewriter } from 'react-simple-typewriter'
 import typewriterSubreddits from '../features/data/typewriterSubreddits.js'
@@ -13,7 +10,6 @@ import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 const SearchBox = ({ onResponse }) => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [singleSelections, setSingleSelections] = useState([])
 
   const updatedSubreddits = typewriterSubreddits.map((subreddit, i) => {
     return { name: subreddit }

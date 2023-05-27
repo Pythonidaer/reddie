@@ -21,7 +21,6 @@ import SavedCommentScreen from './screens/SavedCommentScreen'
 
 const App = () => {
   const [data, setData] = useState('initial data')
-  const shouldRedirect = true
 
   function handleChangeData(newData) {
     setData(newData)

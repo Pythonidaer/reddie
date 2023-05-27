@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Row, Col } from 'react-bootstrap'
-import axios from 'axios'
 import SearchBox from '../components/SearchBox'
 import DynamicPost from '../components/DynamicPost'
 import DataContext from '../components/DataContext'

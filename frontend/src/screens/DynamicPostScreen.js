@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { Row, Col, Container } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import DynamicPost from '../components/DynamicPost'
 import DataContext from '../components/DataContext'
 
-// import axios from 'axios'
-
 const DynamicPostScreen = () => {
-  // const { data, handleChangeData } = useContext(DataContext)
   const { data } = useContext(DataContext)
   const [lastPath, setLastPath] = useState('')
   const [post, setPost] = useState({})
   const url = window.location.href
-  const { id } = useParams()
   const navigate = useNavigate()
 
   const checkURL = (url) => {
