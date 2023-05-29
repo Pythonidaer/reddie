@@ -1,3 +1,5 @@
+// These are 4,400+ (not complete listing of) subreddits that
+// are dynamically rendered into the Typewriter placeholder componentn
 const typewriterSubreddits = [
   'Home',
 

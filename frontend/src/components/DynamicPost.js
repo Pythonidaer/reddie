@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Card } from 'react-bootstrap'
 import CommentThread from './CommentThread'
 import axios from 'axios'
 import { parse } from 'marked'
 import ShowMoreText from 'react-show-more-text'
 
-// will need conversion from reddit markdown syntax to html
 // This component displays a single post from Reddit and can handle comments with substantial margin for error (i.e., comment volume)
 const DynamicPost = ({ post, url }) => {
   const [comments, setComments] = useState([])
@@ -21,13 +20,10 @@ const DynamicPost = ({ post, url }) => {
     return obj.id === lastUrlPart
   }
 
-  // TEST START
-  let totalCount = 0
+  // This function recursively handles child comments to create a nested comment structure
   const handleChildren = (childrenComments, level = 0, results = []) => {
     childrenComments.forEach((child) => {
-      // need logic for "more" Kind objects
-      // except "more" require separate data logic (see below)
-      //
+      // Check if the comment is a valid comment type and has replies
       if (
         child.kind === 't1' &&
         child.data.replies !== '' &&
@@ -43,13 +39,30 @@ const DynamicPost = ({ post, url }) => {
           level,
         }
         results.push(newComment)
+        // Recursively handle the replies of the current comment
         handleChildren(child.data.replies.data.children, level + 1, results)
+      } else if (
+        child.kind === 't1' &&
+        (child.data.replies === '' || child.data.replies === undefined)
+      ) {
+        // Create a new comment object for comments without replies
+        const newCommentWithoutReply = {
+          body: child.data.body,
+          upvotes: child.data.ups,
+          author: child.data.author,
+          link: child.data.permalink,
+          subreddit: child.data.subreddit,
+          awards_count: child.data.total_awards_received,
+          level,
+        }
+        results.push(newCommentWithoutReply)
       }
     })
 
     return results
   }
 
+  // Fetches the comments for the post when the "View Comments" button is clicked
   const handleClick = async () => {
     try {
       const response = await axios.get(
@@ -63,12 +76,7 @@ const DynamicPost = ({ post, url }) => {
     }
   }
 
-  // This component renders a single post card with a link to its comments or a display of them
-  // This style might be worth changing to get more text to appear
-  // Either way, better to start thinking across multiple screens sooner than later
-
-  // convert Reddit API's returned markdown to HTML and set dangerously
-
+  // Convert Reddit API's returned markdown to HTML and set dangerously
   const html = parse(post.selftext, {
     silent: true,
   })
@@ -148,3 +156,24 @@ const DynamicPost = ({ post, url }) => {
 }
 
 export default DynamicPost
+/*
+The DynamicPost component is responsible for displaying a single post from Reddit, along with its associated comments. It is a React component that receives post and url as props.
+
+The component starts by defining a state variable comments using the useState hook, which will store the comments associated with the post.
+
+The seePostsOrComments function is a helper function that checks if the post should display a link to its comments or directly show them. It compares the ID of the post with the last part of the URL.
+
+The handleChildren function is a recursive function that handles the nested structure of comments. It takes an array of childrenComments and iterates through each child comment. It checks if the child comment is a valid comment type ('t1') and if it has replies. If so, it creates a new comment object with relevant information such as the body, upvotes, author, link, subreddit, awards count, and level of nesting. It then recursively calls itself with the child comment's replies to handle further nested comments. If a comment has no replies, it creates a separate comment object for it.
+
+The handleClick function is an asynchronous function triggered when the "View Comments" button is clicked. It makes an HTTP GET request using Axios to fetch the comments for the post. It extracts the children data from the response and calls handleChildren to process the comments and store them in the comments state.
+
+The html variable uses the marked library to convert the Reddit API's returned markdown content of the post's selftext into HTML. This HTML is then set as dangerously inner HTML of the Card.Text component, allowing the post's content to be displayed.
+
+The component's render function returns JSX that displays the post's information, such as the title, author, selftext, and number of comments. If the post has selftext, it uses the ShowMoreText component to show a limited number of lines and provide a "View" or "Hide" option for expanding or collapsing the content. The seePostsOrComments function is used to conditionally render the appropriate links based on whether the post should display comments or link to external content.
+
+When the post does not directly show comments, a "View Comments" button is rendered. Clicking this button triggers the handleClick function, which fetches the comments for the post and updates the comments state.
+
+Finally, if there are comments available (comments state is not empty), the CommentThread component is rendered, passing the comments as props for displaying the nested comment structure.
+
+Overall, the DynamicPost component handles the display of a single post from Reddit, including its content and associated comments, and provides functionality for fetching and rendering the comments dynamically.
+*/

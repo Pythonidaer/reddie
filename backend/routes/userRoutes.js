@@ -18,8 +18,13 @@ import { protect } from '../middleware/authMiddleware.js'
     THE FOLLOWING IS FROM TRAVERSY'S REACT F2B TUTORIAL
 ========================================================== */
 
+// Route to register a new user
 router.post('/', registerUser)
+
+// Route to log in a user
 router.post('/login', loginUser)
+
+// Route to get the currently logged-in user's details
 router.get('/me', protect, getMe)
 
 export default router

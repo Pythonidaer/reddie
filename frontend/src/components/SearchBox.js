@@ -10,61 +10,42 @@ import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 const SearchBox = ({ onResponse }) => {
   const [searchTerm, setSearchTerm] = useState('')
-
-  const updatedSubreddits = typewriterSubreddits.map((subreddit, i) => {
-    return { name: subreddit }
-  })
-  const sortedSubreddits = updatedSubreddits.sort((a, b) =>
-    a.name.localeCompare(b.name)
-  )
-
-  const handleSingleSelections = (selected) => {
-    if (selected && selected.length) {
-      setSearchTerm(selected[0].name)
-    } else {
-      setSearchTerm('')
-    }
-  }
-
-  /*
-This function takes an array as input and returns a new shuffled array using the Fisher-Yates shuffle algorithm. The algorithm works by iterating over each item in the array, selecting a random item from the array, and swapping it with the current item. This is repeated for each item in the array, resulting in a randomized order.
-*/
-  const shuffleArray = (array) => {
-    // create a copy of the input array
-    const randomizedSubreddits = [...array]
-    // shuffle the array using the Fisher-Yates shuffle algorithm
-    randomizedSubreddits.forEach((_, i, arr) => {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[arr[i], arr[j]] = [arr[j], arr[i]]
-    })
-    // return the shuffled array
-    return randomizedSubreddits
-  }
-
-  /*
-  This line declares a state variable randomizedArray and sets its initial value to the typewriterSubreddits array. This array is used as the input to the useTypewriter hook.
-*/
   const [randomizedArray, setRandomizedArray] = useState(typewriterSubreddits)
-  /*
-This line initializes the text state variable and the setText function using the useTypewriter hook. The words property of the object passed to the hook is set to randomizedArray, so the typewriter will go through the randomized array each time it loops.
-*/
-  // do I need setText here?
-  const [text, setText] = useTypewriter({
+  const [text] = useTypewriter({
     words: randomizedArray,
     loop: true,
     delay: 100,
   })
 
-  /*
-  This useEffect hook is called once when the component mounts and uses the shuffleArray function to create a new randomized array. The randomizedArray state variable is then updated with this new array, causing the component to re-render and the typewriter to start looping through the new randomized array. The empty dependency array [] ensures that this effect runs only once, when the component mounts.
-  */
+  // Prepare subreddit options for Typeahead
+  const updatedSubreddits = typewriterSubreddits.map((subreddit) => ({
+    name: subreddit,
+  }))
+  const sortedSubreddits = [...updatedSubreddits].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+
+  // Handle selection in Typeahead
+  const handleSingleSelections = (selected) => {
+    setSearchTerm(selected?.[0]?.name || '')
+  }
+
+  // Shuffle an array using Fisher-Yates algorithm
+  const shuffleArray = (array) => {
+    const randomizedSubreddits = [...array]
+    randomizedSubreddits.forEach((_, i, arr) => {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+    })
+    return randomizedSubreddits
+  }
+
+  // Initialize the randomizedArray state with shuffled subreddits
   useEffect(() => {
     setRandomizedArray(shuffleArray(typewriterSubreddits))
   }, [])
-  // Needs documentation end
 
-  // This function fetches a subreddit's posts
-  // It will notify the user of an error if they provide invalid input
+  // Handle subreddit search
   const handleSearch = async (e) => {
     e.preventDefault()
     try {
@@ -81,12 +62,12 @@ This line initializes the text state variable and the setText function using the
           break
         case !/^[a-zA-Z0-9_]*$/g.test(searchTerm):
           message =
-            'Subreddits can only contain letters, numbers and/or underscores.'
+            'Subreddits can only contain letters, numbers, and underscores.'
           break
         case error.message === 'Network Error':
           message = 'Subreddit not found. Please try a different subreddit.'
           break
-        case searchTerm[0].includes('_'):
+        case searchTerm.startsWith('_'):
           message = 'Subreddits cannot start with underscores.'
           break
         default:
@@ -114,9 +95,9 @@ This line initializes the text state variable and the setText function using the
           labelKey='name'
           onChange={handleSingleSelections}
           options={sortedSubreddits}
-          placeholder={'Try typing in: ' + text}
+          placeholder={`Try typing in: ${text}`}
           inputValue={searchTerm}
-          onInputChange={(input) => setSearchTerm(input)}
+          onInputChange={setSearchTerm}
           className='w-100'
         />
         <Button
@@ -131,4 +112,30 @@ This line initializes the text state variable and the setText function using the
     </>
   )
 }
+
 export default SearchBox
+/*
+The code imports necessary dependencies such as React, useState, useEffect, and various components from react-bootstrap and other libraries.
+
+The SearchBox component is defined as a functional component that takes a prop called onResponse.
+
+Inside the component, there are several state variables defined using the useState hook. These include searchTerm for storing the user's search input, randomizedArray for storing a shuffled array of subreddits, and text for managing the typewriter effect.
+
+The typewriterSubreddits array is prepared as an array of objects with the subreddit names.
+
+The handleSingleSelections function is defined to handle the selection of a subreddit from the dropdown menu of the Typeahead component. It updates the searchTerm state accordingly.
+
+The shuffleArray function is defined to shuffle an array using the Fisher-Yates algorithm. It is used to create a randomized array of subreddits.
+
+The useEffect hook is used to initialize the randomizedArray state with a shuffled array of subreddits when the component mounts. It runs only once thanks to the empty dependency array [].
+
+The handleSearch function is defined to handle the submission of the search form. It sends a GET request to the Reddit API to fetch posts from the selected subreddit. It also handles various error scenarios and displays appropriate error messages using the toast component from react-toastify.
+
+The JSX code renders the search form and components. It includes a heading, a form with the Typeahead component for subreddit selection, and a submit button.
+
+The Typeahead component allows users to select a subreddit from a dropdown menu. It displays suggestions based on the sortedSubreddits array and updates the searchTerm state accordingly.
+
+The submit button triggers the handleSearch function when clicked.
+
+Overall, the SearchBox component provides a search interface for users to enter a subreddit, fetches posts from that subreddit using the Reddit API, and displays error messages if necessary. The typewriter effect adds a dynamic element to the component by displaying randomized subreddit names as a typing animation.
+*/

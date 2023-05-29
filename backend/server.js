@@ -7,8 +7,10 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
 
+// store items like our Mongo URI and JWT secret privately
 dotenv.config()
 
+// Connect to database
 connectDB()
 
 const app = express()
@@ -23,12 +25,16 @@ app.use('/api/comments', commentRoutes)
 // Serve Frontend
 const __dirname = path.resolve()
 if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the frontend build directory
+  // ties into the root package.json heroku-postbuild as well as the build script in frontend/ package.json
   app.use(express.static(path.join(__dirname, '/frontend/build')))
 
+  // Serve the index.html file for all other routes in production
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
   )
 } else {
+  // Default route for non-production environments
   app.get('/', (req, res) => {
     res.send('API is running....')
   })

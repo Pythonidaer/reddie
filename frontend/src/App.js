@@ -20,12 +20,20 @@ import SavedCommentsScreen from './screens/SavedCommentsScreen'
 import SavedCommentScreen from './screens/SavedCommentScreen'
 
 const App = () => {
+  // State hook to store and update data
   const [data, setData] = useState('initial data')
 
+  // Function to handle data changes
+  // Used with DataContext, this will allow us to create
+  // a data context that can be accessed
+  // by any component within its descendant hierarchy.
   function handleChangeData(newData) {
     setData(newData)
   }
 
+  // This way, any component can access and update
+  // the shared data without having to pass it through
+  // multiple levels of component hierarchy explicitly.
   return (
     <DataContext.Provider value={{ data, handleChangeData }}>
       <Router>
@@ -34,9 +42,17 @@ const App = () => {
           <Container>
             <Routes>
               <Route path='/' element={<HomeScreen />} />
+
+              {/* Route for dynamic posts fetched from a subreddit search */}
               <Route path='/dynamicPost/:id' element={<DynamicPostScreen />} />
+
+              {/* Route for login when user is already created in database */}
               <Route path='/login' element={<LoginScreen />} />
+
+              {/* Route for register screen when user hasn't created an account yet */}
               <Route path='/register' element={<RegisterScreen />} />
+
+              {/* Route for saved comments screen (requires authentication) */}
               <Route
                 path='/comments'
                 element={
@@ -45,6 +61,8 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+
+              {/* Route for a specific saved comment screen (requires authentication) */}
               <Route
                 path='/comment/:commentId'
                 element={
@@ -53,6 +71,8 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+
+              {/* Default route, redirects to the home screen */}
               <Route path='*' element={<Navigate replace to='/' />} />
             </Routes>
           </Container>

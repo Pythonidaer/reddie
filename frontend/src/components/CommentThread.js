@@ -17,6 +17,7 @@ const CommentThread = ({ comments }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  // Filter comments to exclude non-comment objects
   const filteredComments = comments.filter(
     (comment) =>
       comment.hasOwnProperty('body') && !comment.hasOwnProperty('kind')
@@ -36,15 +37,18 @@ const CommentThread = ({ comments }) => {
   }
 
   useEffect(() => {
+    // Display error toast if there is an error
     if (isError) {
       toast.error(message)
     }
 
+    // If comment creation is successful, reset state and navigate to comments page
     if (isSuccess) {
       dispatch(reset())
       navigate('/comments')
     }
 
+    // Reset state after error or success handling
     dispatch(reset())
   }, [dispatch, isError, isSuccess, navigate, message])
 
@@ -85,6 +89,7 @@ const CommentThread = ({ comments }) => {
                 // below default is ...
                 truncatedEndingComponent=' '
               >
+                {/* Convert comment body from markdown to HTML */}
                 <Card.Text
                   dangerouslySetInnerHTML={{
                     __html: parse(comment.body, { silent: true }),
@@ -99,6 +104,7 @@ const CommentThread = ({ comments }) => {
               />
             )}
             <div className='d-flex justify-content-between align-items-center'>
+              {/* Link to view comment on Reddit */}
               <Link
                 className='btn btn-secondary'
                 to={`https://www.reddit.com${comment.link}`}
@@ -106,6 +112,7 @@ const CommentThread = ({ comments }) => {
               >
                 View on Reddit
               </Link>
+              {/* Button to save comment */}
               <Button
                 variant='success'
                 type='Button'
@@ -120,11 +127,14 @@ const CommentThread = ({ comments }) => {
         </Card>
       ))}
 
+      {/* Pagination component */}
       <Pagination className=' mt-3 d-flex flex-wrap'>
+        {/* Previous page button */}
         <Pagination.Prev
           onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
           disabled={currentPage === 1}
         />
+        {/* Page numbers */}
         {Array.from({
           length: Math.ceil(filteredComments.length / pageItemsPerPage),
         }).map((_, index) => (
@@ -136,6 +146,7 @@ const CommentThread = ({ comments }) => {
             {index + 1}
           </Pagination.Item>
         ))}
+        {/* Next page button */}
         <Pagination.Next
           onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
           disabled={

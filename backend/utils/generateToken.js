@@ -1,16 +1,27 @@
 import jwt from 'jsonwebtoken'
 
+// Function to generate a JSON Web Token (JWT) with the provided ID
 const generateToken = (id) => {
+  // Generate a token without expiresIn option
   return jwt.sign({ id }, process.env.JWT_SECRET)
 }
 
-// const generateToken = (id) => {
-//     return jwt.sign({ id }, process.env.JWT_SECRET, {
-//       expiresIn: '30d',
-//     })
-//   }
-
 export default generateToken
+/*
+
+// Uncomment the following code to include expiresIn option in the token
+// const generateToken = (id) => {
+//   return jwt.sign({ id }, process.env.JWT_SECRET, {
+//     expiresIn: '30d',
+//   });
+// }
+
+The expiresIn option specifies a time duration after which the token will expire. In the commented code, the token will expire after 30 days ('30d'). You can modify the duration as per your requirements.
+
+Using the expiresIn option is useful for implementing token-based authentication systems where tokens automatically expire after a certain period. Clients will need to obtain a new token or refresh it once it expires to continue accessing protected resources.
+
+Remember to choose an appropriate expiration duration for your specific use case, considering the balance between security and user experience.
+*/
 
 /*
 I am not well-versed on CyberSec, so just commented out expirations for now

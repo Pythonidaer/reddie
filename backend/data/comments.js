@@ -22,3 +22,13 @@ const comments = [
 ]
 
 export default comments
+/*
+The comments array contains two comment objects representing sample comment data.
+Each comment object has a data property that holds the comment details.
+Comment details include properties such as subreddit, author, body, upvotes, link, and awards_count.
+The body property may contain HTML markup or links.
+The upvotes property represents the number of upvotes received for the comment.
+The link property holds the URL of the comment within a specific subreddit.
+The awards_count property indicates the count of awards given to the comment.
+The comments array is exported as the default export of the module, making it available for use in other parts of the application.
+*/

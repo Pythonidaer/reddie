@@ -9,36 +9,33 @@ import connectDB from './config/db.js'
 
 dotenv.config()
 
+// Connect to database
 connectDB()
-
-const allPosts = []
-posts.forEach((post) => {
-  allPosts.push(post.data)
-})
 
 const allComments = []
 comments.forEach((comment) => {
   allComments.push(comment.data)
 })
 
+// Import data from arrays into database
 const importData = async () => {
   try {
+    // Clear existing data from collections
     await User.deleteMany()
     await Comment.deleteMany()
 
+    // Insert users data into User collection and get the created users
     const createdUsers = await User.insertMany(users)
 
+    // Get the ID of the first created user (assuming it's the admin user)
     const adminUser = createdUsers[0]._id
 
-    const samplePosts = allPosts.map((post) => {
-      return { ...post, user: adminUser }
-    })
-
+    // Modify each comment by adding the admin user as the user reference
     const sampleComments = allComments.map((comment) => {
       return { ...comment, user: adminUser }
     })
 
-    await Post.insertMany(samplePosts)
+    // Insert the modified comments into their respective collections
     await Comment.insertMany(sampleComments)
 
     console.log('Data Imported!'.green.inverse)
@@ -49,9 +46,9 @@ const importData = async () => {
   }
 }
 
+// Delete all data from collections
 const destroyData = async () => {
   try {
-    await Post.deleteMany()
     await User.deleteMany()
     await User.deleteMany()
 
@@ -63,6 +60,7 @@ const destroyData = async () => {
   }
 }
 
+// Determine if importing or destroying data based on command-line argument
 if (process.argv[2] === '-d') {
   destroyData()
 } else {

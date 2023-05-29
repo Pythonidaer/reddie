@@ -25,12 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # test data
-/backendBackup
-/frontend/src/screens/NewCommentScreen.js
-/frontend/src/components/commentsChildrenJson.js
-/frontend/src/components/commentsJson.js
-/frontend/src/components/commentsJsonCleaned.js
-/frontned/src/playground*
-/frontend/hooks
 /backend/data
 /backend/seeder.js

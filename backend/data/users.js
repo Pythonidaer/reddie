@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 
+// An array of user objects representing sample user data
 const users = [
   {
     username: 'Jonathan Hammond',
@@ -20,3 +21,6 @@ const users = [
 ]
 
 export default users
+/*
+The password property is hashed using bcryptjs.hashSync() to securely store the passwords. The second argument 10 represents the salt rounds used for hashing.
+*/
