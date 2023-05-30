@@ -112,11 +112,6 @@ In summary, the code initializes the navigate variable using useNavigate to acce
         ) : (
           <Card.Text>{comment.body}</Card.Text>
         )}
-
-        <Card.Text>
-          <i className='fa-solid pr-3 fa-thumbs-up'></i>
-          {' ' + comment.upvotes}
-        </Card.Text>
         {seeCommentLinkCondition() ? (
           <>
             <div className='d-flex justify-content-between align-items-center'>
@@ -171,31 +166,6 @@ In summary, the code initializes the navigate variable using useNavigate to acce
 
 export default SavedComment
 /*
-This is basically what I would be looking for for times when not on the single save screen
-            <div className='d-flex justify-content-between align-items-center'>
-              <Link
-                className='btn btn-secondary'
-                to={`https://www.reddit.com${comment.link}`}
-                target='_blank'
-              >
-                View on Reddit
-              </Link>
-              <Button
-                variant='success'
-                type='Button'
-                className='btn btn-success'
-                disabled={!user}
-                onClick={(e) => handleButtonClick(e, comment)}
-              >
-                <i className={'far fa-save'}></i>
-              </Button>
-            </div>
-*/
-/*
-    <Card
-      className='my-3 p-3 rounded'
-      style=width: '18rem', margin: '0 auto' 
-    >    
 The component receives a comment prop representing the comment object to be displayed.
 It uses Redux's useSelector hook to access the user and comment-related states from the Redux store.
 The component uses Redux's useDispatch hook to dispatch the deleteComment action.
