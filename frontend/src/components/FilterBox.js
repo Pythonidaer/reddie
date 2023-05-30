@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { Container, Form, ListGroup } from 'react-bootstrap'
+import { Container, Form } from 'react-bootstrap'
 import { DebounceInput } from 'react-debounce-input'
 
-const FilterBox = ({ comments, setFilteredComments }) => {
+const FilterBox = ({ comments, setFilteredComments, onSearchTermChange }) => {
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value
-    console.log(searchTerm)
     setSearchTerm(searchTerm)
+    onSearchTermChange(searchTerm) // Call the callback function in the parent component
+
     filterComments(searchTerm)
   }
 
@@ -21,6 +22,7 @@ const FilterBox = ({ comments, setFilteredComments }) => {
     setFilteredComments(filteredComments)
   }
 
+  //   Pass a child prop - e.target.value - up to the SavedCommentsScreen
   return (
     <Container>
       <Form>

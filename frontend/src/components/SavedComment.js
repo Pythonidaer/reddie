@@ -94,7 +94,7 @@ In summary, the code initializes the navigate variable using useNavigate to acce
       <Card.Body>
         <Card.Title>{comment.author}</Card.Title>
         <Card.Subtitle className='mb-2 text-muted'>
-          {comment.subreddit}
+          Subreddit: {comment.subreddit}
         </Card.Subtitle>
 
         {comment.body ? (

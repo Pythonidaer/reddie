@@ -7,6 +7,13 @@ import { Row, Col, Alert } from 'react-bootstrap'
 import FilterBox from '../components/FilterBox'
 
 const SavedCommentsScreen = () => {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  // Callback function to handle the searchTerm change
+  const onSearchTermChange = (value) => {
+    setSearchTerm(value)
+  }
+
   // Retrieve the comments, isLoading, and isSuccess state from the comments slice in the Redux store
   const { comments, isLoading, isSuccess } = useSelector(
     (state) => state.comments
@@ -39,10 +46,15 @@ const SavedCommentsScreen = () => {
     <>
       {/* Title */}
       <h1>Your Saved Comments</h1>
-
+      {filteredComments.length === 0 && searchTerm.length > 0 && (
+        <Alert variant='warning'>
+          No comments found with search phrase: <strong>{searchTerm}</strong>
+        </Alert>
+      )}
       <FilterBox
         comments={comments}
         setFilteredComments={setFilteredComments}
+        onSearchTermChange={onSearchTermChange}
       />
 
       {/* Display the saved comments */}
@@ -65,17 +77,10 @@ const SavedCommentsScreen = () => {
 
 export default SavedCommentsScreen
 /*
-This needs the e.target.value passed to the parent component:
-{filteredComments.length === 0 && searchTerm.length > 0 && (
-  <Alert variant='info'>
-    No comments found with search phrase: <strong>{searchTerm}</strong>
-  </Alert>
-)}
-
-This involves changes to both files. That way, an alert can appear when no results come back.
 
 Add this back in if complaints about 
 FilterBox result in slowed performance
+I imported debouncing so this shouldn't be an issue
 <Row>
 {comments.map((comment) => (
   <Col key={comment._id} sm={12} md={6} lg={4} xl={3}>
