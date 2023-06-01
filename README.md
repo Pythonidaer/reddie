@@ -2,6 +2,10 @@
 
 The Reddie App is an interactive web application that allows users to fetch and view posts from various subreddits based on their input. With a user-friendly interface, users can browse through comment threads and engage in discussions. Additionally, the app provides a convenient feature for users to save comments they find interesting, allowing them to revisit and view them later at their convenience.
 
+## Special Thanks
+
+Many thanks to [Leo](https://www.linkedin.com/in/leoelicos/) and [Bryan](https://www.linkedin.com/in/bryan-wienhoff/) for the assistance they provided on this project.
+
 ## Technologies Used
 
 The following technologies have been utilized in this project:
@@ -24,6 +28,17 @@ The following technologies have been utilized in this project:
 - GitHub: Web-based hosting service for Git repositories.
 - Axios: Promise-based HTTP client for making API requests.
 - Cypress: JavaScript end-to-end testing framework.
+
+## Future Enhancement Ideas
+
+- Revamp UI with darkmode or alt-color mode options
+- Card re-design to separate box from background
+- Update comment idea
+- Checkbox filter by subreddit
+- Alternative search input for full-URLs (any subreddit post)
+- The above would require an alt-Search Screen for signed-in Users
+- The search would receive the URL and spit out its rendered card
+- This would then contain similar code as the SearchBox page
 
 ## Prerequisites
 

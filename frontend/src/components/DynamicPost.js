@@ -121,11 +121,18 @@ const DynamicPost = ({ post, url }) => {
           )}
           <Card.Text>{post.num_comments} Comments</Card.Text>
           {!seePostsOrComments(post, url) ? (
-            <div>
-              <Link className='card-link' to={`/dynamicPost/${post.id}`}>
+            <div className='d-flex flex-column'>
+              <Link
+                className='btn btn-primary mt-2 d-inline-block'
+                to={`/dynamicPost/${post.id}`}
+              >
                 See Post
               </Link>
-              <Link className='card-link' to={post.url} target='_blank'>
+              <Link
+                className='btn btn-secondary mt-2 d-inline-block'
+                to={post.url}
+                target='_blank'
+              >
                 {post.subreddit}
               </Link>
             </div>

@@ -114,16 +114,19 @@ In summary, the code initializes the navigate variable using useNavigate to acce
         )}
         {seeCommentLinkCondition() ? (
           <>
-            <div className='d-flex justify-content-between align-items-center'>
+            <div className='d-flex flex-column'>
               <Link
-                className='btn btn-secondary'
+                to={`/comment/${comment._id}`}
+                className='btn btn-success mt-2 d-inline-block'
+              >
+                See Comment
+              </Link>
+              <Link
+                className='btn btn-secondary mt-2 d-inline-block'
                 to={`https://www.reddit.com${comment.link}`}
                 target='_blank'
               >
                 View on Reddit
-              </Link>
-              <Link to={`/comment/${comment._id}`} className='btn btn-success'>
-                See Comment
               </Link>
             </div>
 
